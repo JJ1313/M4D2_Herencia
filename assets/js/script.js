@@ -1,22 +1,27 @@
-const play = (() => {
+const iife = (() => {
   const setSrcMultimedia = (url, id) => {
-    document.getElementById(`${id}`).setAttribute('src', url);
+    let elemento = document.getElementById(`${id}`);
+    elemento.setAttribute('src', url);
   };
+
   return {
-    byUrl(url, id){
+    play(url, id){
       setSrcMultimedia(url, id);
     }
-  }; 
+  }
 })();
 
 class Multimedia{
-  #url;
   constructor(url){
-    this.#url = url;
+    this._url = url;
   }
   get url(){
-    return this.#url;
+    return this._url;
   }
+  set url(nuevaUrl){
+    this._url = nuevaUrl;
+  }
+
   setInicio(){
     return 'Este método es para realizar un cambio en la URL del video';
   }
@@ -25,14 +30,19 @@ class Multimedia{
 class Reproductor extends Multimedia{
   constructor(url, id){
     super(url);
-    this.id = id;
+    this._id = id;
+  }
+  get id(){
+    return this._id;
+  }
+  set id(nuevaId){
+    this._id = nuevaId;
   }
   playMultimedia(){
-    play.byUrl(this.url, this.id);
+    iife.play(this.url, this._id);
   }
   setInicio(ms){
-    play.byUrl(`${this.url}?start=${ms}`, this.id);
-    // document.getElementById(this.id).setAttribute('src', `${this.url}?start=${ms}`);
+    this.url = `${this.url}?start=${ms}`;
   }
 }
 
@@ -40,8 +50,9 @@ const music = new Reproductor('https://www.youtube.com/embed/5PSNL1qE6VY', 'musi
 const movie = new Reproductor('https://www.youtube.com/embed/5PSNL1qE6VY', 'peliculas');
 const serie = new Reproductor('https://www.youtube.com/embed/5PSNL1qE6VY', 'series');
 
+
+movie.setInicio(105);
+
 music.playMultimedia();
-
-movie.setInicio(200);
-
 serie.playMultimedia();
+movie.playMultimedia();
