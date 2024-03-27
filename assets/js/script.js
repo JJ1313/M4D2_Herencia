@@ -12,14 +12,15 @@ const iife = (() => {
 })();
 
 class Multimedia{
+  #url;
   constructor(url){
-    this._url = url;
+    this.#url = url;
   }
   get url(){
-    return this._url;
+    return this.#url;
   }
   set url(nuevaUrl){
-    this._url = nuevaUrl;
+    this.#url = nuevaUrl;
   }
 
   setInicio(){
@@ -28,18 +29,19 @@ class Multimedia{
 }
 
 class Reproductor extends Multimedia{
+  #id;
   constructor(url, id){
     super(url);
-    this._id = id;
+    this.#id = id;
   }
   get id(){
-    return this._id;
+    return this.#id;
   }
   set id(nuevaId){
-    this._id = nuevaId;
+    this.#id = nuevaId;
   }
   playMultimedia(){
-    iife.play(this.url, this._id);
+    iife.play(this.url, this.#id);
   }
   setInicio(ms){
     this.url = `${this.url}?start=${ms}`;
@@ -51,7 +53,7 @@ const movie = new Reproductor('https://www.youtube.com/embed/5PSNL1qE6VY', 'peli
 const serie = new Reproductor('https://www.youtube.com/embed/5PSNL1qE6VY', 'series');
 
 
-movie.setInicio(105);
+movie.setInicio(420);
 
 music.playMultimedia();
 serie.playMultimedia();
